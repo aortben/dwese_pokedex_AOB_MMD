@@ -1,0 +1,80 @@
+-- Inserts de las regiones:
+INSERT IGNORE INTO regions (id, name) VALUES
+(1, '01', 'Kanto'),
+(2, '02', 'Johto'),
+(3, '03', 'Hoenn'),
+(4, '04', 'Sinnoh'),
+(5, '05', 'Unova'),
+(6, '06', 'Kalos'),
+(7, '07', 'Alola'),
+(8, '08', 'Galar'),
+(9, '09', 'Paldea')
+
+-- Inserts de las rutas:
+INSERT IGNORE INTO routes (id, name) VALUES
+(1, 'Ruta 1'),
+(2, 'Ruta 2'),
+(3, 'Ruta 3'),
+(4, 'Ruta 4'),
+(5, 'Ruta 5'),
+(6, 'Ruta 6'),
+(7, 'Ruta 7'),
+(8, 'Ruta 8'),
+(9, 'Ruta 9'),
+(10, 'Ruta 10'),
+(11, 'Ruta 11'),
+(12, 'Ruta 12'),
+(13, 'Ruta 13'),
+(14, 'Ruta 14'),
+(15, 'Ruta 15'),
+(16, 'Ruta 16'),
+(17, 'Ruta 17'),
+(18, 'Ruta 18'),
+(19, 'Ruta 19'),
+(20, 'Ruta 20');
+
+-- Inserts de los pokemon:
+INSERT IGNORE INTO pokemons (id, name, type, level) VALUES
+(1, 'Pikachu', 'Electrico', 25),
+(2, 'Charmander', 'Fuego', 12),
+(3, 'Bulbasaur', 'Planta', 10),
+(4, 'Squirtle', 'Agua', 15),
+(5, 'Jigglypuff', 'Normal', 8),
+(6, 'Eevee', 'Normal', 20),
+(7, 'Machop', 'Lucha', 18),
+(8, 'Geodude', 'Roca', 14),
+(9, 'Psyduck', 'Agua', 16),
+(10, 'Vulpix', 'Fuego', 13),
+(11, 'Magnemite', 'Eléctrico', 22),
+(12, 'Onix', 'Roca', 25),
+(13, 'Gengar', 'Fantasma', 30),
+(14, 'Lapras', 'Agua', 28),
+(15, 'Ditto', 'Normal', 10),
+(16, 'Snorlax', 'Normal', 35),
+(17, 'Mewtwo', 'Psíquico', 70),
+(18, 'Lucario', 'Lucha', 32),
+(19, 'Tyranitar', 'Roca', 55),
+(20, 'Dragonite', 'Dragon', 50);
+
+-- Inserts de los movimientos:
+INSERT IGNORE INTO movements (id, name, type, category, power, accuracy, PP) VALUES
+(1, 'Viento Afín', 'Normal', 'Especial', 60, 100, 35),
+(2, 'Llamarada', 'Fuego', 'Especial', 90, 100, 5),
+(3, 'Placaje', 'Normal', 'Fisico', 40, 100, 35),
+(4, 'Hidro Barra', 'Agua', 'Especial', 80, 100, 10),
+(5, 'Rayo', 'Electrico', 'Especial', 110, 70, 10),
+(6, 'Tornado', 'Volador', 'Especial', 100, 75, 10),
+(7, 'Corte', 'Normal', 'Fisico', 50, 95, 30),
+(8, 'Roca Afilada', 'Roca', 'Fisico', 130, 80, 5),
+(9, 'Puño Fuego', 'Fuego', 'Fisico', 75, 100, 15),
+(10, 'Hidrobomba', 'Agua', 'Especial', 110, 80, 5),
+(11, 'Rayo Aurora', 'Eléctrico', 'Especial', 110, 100, 10),
+(12, 'Sombra Vil', 'Fantasma', 'Especial', 80, 100, 15),
+(13, 'Terremoto', 'Tierra', 'Fisico', 100, 100, 10),
+(14, 'Viento Plata', 'Normal', 'Especial', 55, 100, 35),
+(15, 'Cabezazo', 'Normal', 'Fisico', 70, 100, 15),
+(16, 'Puño Trueno', 'Eléctrico', 'Fisico', 150, 100, 5),
+(17, 'Furia', 'Lucha', 'Fisico', 20, 100, 20),
+(18, 'Latigazo', 'Veneno', 'Fisico', 85, 100, 10),
+(19, 'Puño Meteoro', 'Lucha', 'Fisico', 120, 85, 5),
+(20, 'Ciclón', 'Volador', 'Especial', 100, 75, 10);
