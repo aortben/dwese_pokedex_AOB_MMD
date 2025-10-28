@@ -1,17 +1,17 @@
 -- Inserts de las regiones:
-INSERT IGNORE INTO regions (id, name) VALUES
-(1, '01', 'Kanto'),
-(2, '02', 'Johto'),
-(3, '03', 'Hoenn'),
-(4, '04', 'Sinnoh'),
-(5, '05', 'Unova'),
-(6, '06', 'Kalos'),
-(7, '07', 'Alola'),
-(8, '08', 'Galar'),
-(9, '09', 'Paldea')
+INSERT IGNORE INTO region (id, name) VALUES
+(1, 'Kanto'),
+(2, 'Johto'),
+(3, 'Hoenn'),
+(4, 'Sinnoh'),
+(5, 'Unova'),
+(6, 'Kalos'),
+(7, 'Alola'),
+(8, 'Galar'),
+(9, 'Paldea');
 
 -- Inserts de las rutas:
-INSERT IGNORE INTO routes (id, name) VALUES
+INSERT IGNORE INTO route (id, name) VALUES
 (1, 'Ruta 1'),
 (2, 'Ruta 2'),
 (3, 'Ruta 3'),
@@ -34,7 +34,7 @@ INSERT IGNORE INTO routes (id, name) VALUES
 (20, 'Ruta 20');
 
 -- Inserts de los pokemon:
-INSERT IGNORE INTO pokemons (id, name, type, level) VALUES
+INSERT IGNORE INTO pokemon (id, name, type, level) VALUES
 (1, 'Pikachu', 'Electrico', 25),
 (2, 'Charmander', 'Fuego', 12),
 (3, 'Bulbasaur', 'Planta', 10),
@@ -57,7 +57,7 @@ INSERT IGNORE INTO pokemons (id, name, type, level) VALUES
 (20, 'Dragonite', 'Dragon', 50);
 
 -- Inserts de los movimientos:
-INSERT IGNORE INTO movements (id, name, type, category, power, accuracy, PP) VALUES
+INSERT IGNORE INTO move (id, name, type, category, power, accuracy, PP) VALUES
 (1, 'Viento Afín', 'Normal', 'Especial', 60, 100, 35),
 (2, 'Llamarada', 'Fuego', 'Especial', 90, 100, 5),
 (3, 'Placaje', 'Normal', 'Fisico', 40, 100, 35),

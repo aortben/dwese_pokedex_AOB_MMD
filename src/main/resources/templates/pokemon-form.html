@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head :: head('Pokédex - Formulario Pokémon')"></head>
+<body>
+<header th:replace="fragments/header :: header"></header>
+
+<div class="container mt-5 pt-5">
+    <h2 class="text-center mb-4 text-danger fw-bold" th:text="${pokemon.id == null} ? 'Nuevo Pokémon' : 'Editar Pokémon'"></h2>
+
+    <form th:action="${pokemon.id == null} ? @{/pokemons/insert} : @{/pokemons/update}" th:object="${pokemon}" method="post" class="mx-auto" style="max-width: 500px;">
+        <div class="mb-3">
+            <label for="name" class="form-label fw-bold">Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Nombre del Pokémon" required>
+        </div>
+        <div class="mb-3">
+            <label for="type" class="form-label fw-bold">Type</label>
+            <input type="text" class="form-control" id="type" th:field="*{type}" placeholder="Tipo" required>
+        </div>
+        <div class="mb-3">
+            <label for="level" class="form-label fw-bold">Level</label>
+            <input type="number" class="form-control" id="level" th:field="*{level}" min="1" placeholder="Nivel" required>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a th:href="@{/pokemons}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-danger fw-bold">Save</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
