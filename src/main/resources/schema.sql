@@ -2,13 +2,13 @@
 CREATE TABLE IF NOT EXISTS region (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
-    );
+);
 
 -- Crear tabla rutas
 CREATE TABLE IF NOT EXISTS route (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
-    );
+);
 
 -- Crear tabla pokemons
 CREATE TABLE IF NOT EXISTS pokemon(
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS pokemon(
     name VARCHAR(100) NOT NULL,
     type VARCHAR(50) NOT NULL,
     level INT NOT NULL
-    );
+);
 
 -- Crear tabla movimientos
 CREATE TABLE IF NOT EXISTS move (
@@ -27,13 +27,14 @@ CREATE TABLE IF NOT EXISTS move (
     power INT NOT NULL,
     accuracy INT NOT NULL,
     PP INT NOT NULL
-    );
+);
 
--- Tabla entre pokemon y movimientos para gestionar las limitaciones (Por ejemplo el maximo de movimientos de un pokemon es 4)
-CREATE TABLE pokemon_moves (
-    pokemon_id BIGINT NOT NULL,
-    move_id BIGINT NOT NULL,
+-- Tabla intermedia entre pokemon y movimientos
+CREATE TABLE IF NOT EXISTS pokemon_moves (
+    pokemon_id INT NOT NULL,
+    move_id INT NOT NULL,
     PRIMARY KEY (pokemon_id, move_id),
-    FOREIGN KEY (pokemon_id) REFERENCES pokemons(id),
-    FOREIGN KEY (move_id) REFERENCES moves(id)
-    );
+    FOREIGN KEY (pokemon_id) REFERENCES pokemon(id),
+    FOREIGN KEY (move_id) REFERENCES move(id)
+);
+
