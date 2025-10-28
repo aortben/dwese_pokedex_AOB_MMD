@@ -1,7 +1,16 @@
 <!-- header.html -->
 <header th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
     <!-- Pokedex-style navbar -->
-    <nav class="navbar navbar-expand-md fixed-top" style="background: linear-gradient(to right, #ff0000 50%, #ffffff 50%); box-shadow: 0 4px 6px rgba(0,0,0,0.3); border-radius: 0 0 15px 15px;">
+    <nav class="navbar navbar-expand-md fixed-top"
+         style="width: 80%; margin: 0 auto;
+                background: linear-gradient(to right,
+                                            #ff0000 0%,    /* rojo intenso */
+                                            #ff4d4d 25%,   /* rojo medio */
+                                            #ff9999 50%,   /* rojo claro */
+                                            #ffe6e6 75%,   /* rosa muy claro */
+                                            #ffffff 100%); /* blanco */
+                box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+                border-radius: 0 0 15px 15px;">
         <div class="container-fluid">
             <!-- Logo / brand -->
             <a class="navbar-brand text-white fw-bold" href="#" th:href="@{/}" style="text-shadow: 1px 1px #000;">
@@ -16,22 +25,23 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <a class="nav-link text-dark fw-semibold" th:href="@{/}">Inicio</a>
+                        <a class="nav-link text-dark fw-semibold" th:href="@{/}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark fw-semibold" th:href="@{/regions}">Regiones</a>
+                        <a class="nav-link text-dark fw-semibold" th:href="@{/regions}">Regions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark fw-semibold" th:href="@{/routes}">Regiones</a>
+                        <a class="nav-link text-dark fw-semibold" th:href="@{/routes}">Routes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark fw-semibold" th:href="@{/moves}">Movimientos</a>
+                        <a class="nav-link text-dark fw-semibold" th:href="@{/pokemons}">Pokemons</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark fw-semibold" th:href="@{/pokemons}">Pokémon</a>
+                        <a class="nav-link text-dark fw-semibold" th:href="@{/moves}">Moves</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 </header>
+

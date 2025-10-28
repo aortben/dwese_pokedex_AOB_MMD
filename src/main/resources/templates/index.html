@@ -7,22 +7,20 @@
 <header th:replace="fragments/header :: header"></header>
 
 <!-- Contenido dinámico -->
-<main class="flex-shrink-0">
-    <div class="container">
-        <h1 class="mt-5">DWES Pokedex</h1>
-        <p class="lead">Alvaro Ortega Benítez - Aplicación Web para consultar Pokémon, rutas y regiones.</p>
-
-        <!-- Opcional: botones de navegación -->
-        <div class="mt-4">
-            <a th:href="@{/pokemon}" class="btn btn-primary me-2">Ver Pokémon</a>
-            <a th:href="@{/routes}" class="btn btn-secondary me-2">Ver Rutas</a>
-            <a th:href="@{/regions}" class="btn btn-info">Ver Regiones</a>
+<main class="flex-shrink-0 d-flex justify-content-center" style="margin-top: 5%;">
+    <div class="container" style="max-width: 80%;">
+        <div class="text-center">
+            <img th:src="@{/images/Alola.png}"
+                 alt="Alola"
+                 class="img-fluid rounded"
+                 style="border-radius: 20%; max-width: 50%; height: auto;">
         </div>
     </div>
 </main>
 
 <!-- Insertar el fragmento del footer -->
 <footer th:replace="fragments/footer :: footer"></footer>
-
 </body>
 </html>
+
+
