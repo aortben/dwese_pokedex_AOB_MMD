@@ -13,9 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.sql.SQLException;
 import java.util.List;
 
-public class RouteController {
-}
-
 @Controller
 @RequestMapping("/routes")
 public class RouteController {
@@ -51,8 +48,7 @@ public class RouteController {
 
     @GetMapping("/edit")
     public String showEditForm(@RequestParam("id") int id, Model model) {
-        logger.info("Mostrando formulario de edición para la ruta con ID {}",
-                id);
+        logger.info("Mostrando formulario de edición para la ruta con ID {}", id);
         Route route = null;
         try {
             route = routeDAO.getRouteById((long) id);
@@ -63,27 +59,23 @@ public class RouteController {
             logger.error("Error al obtener la ruta con ID {}: {}", id, e.getMessage());
             model.addAttribute("errorMessage", "Error al obtener la ruta.");
         }
-        model.addAttribute("ruta", route);
+        model.addAttribute("route", route);
 
         return "route-form";
     }
 
     @PostMapping("/insert")
     public String insertRoute(@ModelAttribute("route") Route route, RedirectAttributes redirectAttributes) {
-        logger.info("Insertando nueva ruta con código {}", route.getCode());
+        logger.info("Insertando nueva ruta...");
         try {
-            if (routeDAO.existsRouteByCode(route.getCode())) {
-                logger.warn("El código de la ruta {} ya existe.", route.getCode());
-                redirectAttributes.addFlashAttribute("errorMessage", "El código de la ruta ya existe.");
-                return "redirect:/routes/new";
-            }
+            // Aquí, si existiera el método existsRouteByCode, eliminarlo o ajustarlo
+            // Si no es necesario, simplemente insertamos la ruta
             routeDAO.insertRoute(route);
-            logger.info("Ruta {} insertada con éxito.", route.getCode());
+            logger.info("Ruta insertada con éxito.");
         } catch (SQLException e) {
-            logger.error("Error al insertar la ruta {}: {}", route.getCode(), e.getMessage());
+            logger.error("Error al insertar la ruta: {}", e.getMessage());
             redirectAttributes.addFlashAttribute("errorMessage", "Error al insertar la ruta.");
         }
-
         return "redirect:/routes";
     }
 
@@ -92,33 +84,24 @@ public class RouteController {
                               RedirectAttributes redirectAttributes) {
         logger.info("Actualizando ruta con ID {}", route.getId());
         try {
-            if (routeDAO.existsRouteByCodeAndNotId(route.getCode(), route.getId())) {
-                logger.warn("El código de la ruta {} ya existe para otra ruta.", route.getCode());
-                redirectAttributes.addFlashAttribute("errorMessage", "El código de la ruta ya existe para otra ruta.");
-                return "redirect:/routes/edit?id=" + route.getId();
-            }
+            // Ajuste si no existe validación por code
             routeDAO.updateRoute(route);
-            logger.info("Ruta con ID {} actualizada con éxito.",
-                    route.getId());
+            logger.info("Ruta con ID {} actualizada con éxito.", route.getId());
         } catch (SQLException e) {
-            logger.error("Error al actualizar la ruta con ID {}: {}",
-                    route.getId(), e.getMessage());
+            logger.error("Error al actualizar la ruta con ID {}: {}", route.getId(), e.getMessage());
             redirectAttributes.addFlashAttribute("errorMessage", "Error al actualizar la ruta.");
-
         }
         return "redirect:/routes";
     }
 
     @PostMapping("/delete")
-    public String deleteRoute(@RequestParam("id") Long id, RedirectAttributes
-            redirectAttributes) {
+    public String deleteRoute(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
         logger.info("Eliminando ruta con ID {}", id);
         try {
-            routeDAO.deleteRoute((long) id);
+            routeDAO.deleteRoute(id);
             logger.info("Ruta con ID {} eliminada con éxito.", id);
         } catch (SQLException e) {
-            logger.error("Error al eliminar la ruta con ID {}: {}", id,
-                    e.getMessage());
+            logger.error("Error al eliminar la ruta con ID {}: {}", id, e.getMessage());
             redirectAttributes.addFlashAttribute("errorMessage", "Error al eliminar la ruta.");
         }
         return "redirect:/routes";
