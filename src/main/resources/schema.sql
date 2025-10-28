@@ -1,17 +1,17 @@
 -- Crear tabla regiones
-CREATE TABLE IF NOT EXISTS regions (
+CREATE TABLE IF NOT EXISTS region (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
     );
 
 -- Crear tabla rutas
-CREATE TABLE IF NOT EXISTS routes (
+CREATE TABLE IF NOT EXISTS route (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL
     );
 
 -- Crear tabla pokemons
-CREATE TABLE IF NOT EXISTS pokemons (
+CREATE TABLE IF NOT EXISTS pokemon(
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     type VARCHAR(50) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS pokemons (
     );
 
 -- Crear tabla movimientos
-CREATE TABLE IF NOT EXISTS movements (
+CREATE TABLE IF NOT EXISTS move (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     type VARCHAR(50) NOT NULL,
