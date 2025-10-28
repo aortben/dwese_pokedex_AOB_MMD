@@ -28,3 +28,12 @@ CREATE TABLE IF NOT EXISTS move (
     accuracy INT NOT NULL,
     PP INT NOT NULL
     );
+
+-- Tabla entre pokemon y movimientos para gestionar las limitaciones (Por ejemplo el maximo de movimientos de un pokemon es 4)
+CREATE TABLE pokemon_moves (
+    pokemon_id BIGINT NOT NULL,
+    move_id BIGINT NOT NULL,
+    PRIMARY KEY (pokemon_id, move_id),
+    FOREIGN KEY (pokemon_id) REFERENCES pokemons(id),
+    FOREIGN KEY (move_id) REFERENCES moves(id)
+    );
