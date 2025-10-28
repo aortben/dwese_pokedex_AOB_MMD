@@ -13,9 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.sql.SQLException;
 import java.util.List;
 
-public class RouteController {
-}
-
 @Controller
 @RequestMapping("/routes")
 public class RouteController {
