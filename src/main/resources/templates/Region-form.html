@@ -9,7 +9,7 @@
     <div class="container">
         <h1 class="mt-5" th:text="${region.id} == null ? 'Crear Nueva Región' : 'Editar Región'"></h1>
 
-        <form th:action="@{${region.id} == null ? '/regions/save' : '/regions/update'}" th:object="${region}" method="post">
+        <form th:action="@{${region.id} == null ? '/regions/insert' : '/regions/update'}" th:object="${region}" method="post">
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre de la Región</label>
                 <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Ej: Kanto" required>
