@@ -38,3 +38,12 @@ CREATE TABLE IF NOT EXISTS pokemon_moves (
     FOREIGN KEY (move_id) REFERENCES move(id)
 );
 
+CREATE TABLE route_pokemon (
+    route_id INT NOT NULL,
+    pokemon_id INT NOT NULL,
+    PRIMARY KEY (route_id, pokemon_id),
+    FOREIGN KEY (route_id) REFERENCES route(id) ON DELETE CASCADE,
+    FOREIGN KEY (pokemon_id) REFERENCES pokemon(id) ON DELETE CASCADE
+);
+
+

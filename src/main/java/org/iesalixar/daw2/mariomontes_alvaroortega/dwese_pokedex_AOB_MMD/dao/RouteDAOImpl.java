@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -97,6 +98,14 @@ public class RouteDAOImpl implements RouteDAO {
             logger.warn("No region found with id: {}", id);
             return null;
         }
+    }
+
+    public Route getRouteWithPokemons(Long id) throws SQLException {
+        Route route = getRouteById(id); // tu método actual
+        if(route != null) {
+            route.getPokemons().size(); // fuerza carga de Pokémon si es lazy
+        }
+        return route;
     }
 
 }

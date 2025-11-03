@@ -25,11 +25,16 @@
                 <td th:text="${route.id}"></td>
                 <td th:text="${route.name}"></td>
                 <td>
+                <td>
                     <a th:href="@{'/routes/edit'(id=${route.id})}" class="btn btn-sm btn-warning">Editar</a>
+
+                    <a th:href="@{'/routes/view'(id=${route.id})}" class="btn btn-sm btn-info">Ver Pokémon</a>
+
                     <form th:action="@{'/routes/delete'}" method="post" style="display:inline;">
                         <input type="hidden" name="id" th:value="${route.id}">
                         <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
                     </form>
+                </td>
                 </td>
             </tr>
             </tbody>

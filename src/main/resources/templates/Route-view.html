@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head ('Pokémon - Ver Ruta')"></head>
+<body class="d-flex flex-column h-100">
+
+<header th:replace="fragments/header :: header"></header>
+
+<main class="flex-shrink-0">
+    <div class="container">
+        <h1 th:text="${route.name}">Ruta</h1>
+
+        <h3>Pokémon en esta ruta:</h3>
+        <ul>
+            <li th:each="pokemon : ${route.pokemons}" th:text="${pokemon.name}"></li>
+        </ul>
+
+        <a th:href="@{/routes}" class="btn btn-secondary mt-3">Volver a Rutas</a>
+    </div>
+</main>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
