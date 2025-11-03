@@ -24,6 +24,26 @@ public class MoveController {
     private MoveDAO moveDAO;
 
     /**
+     * Save a new move.
+     */
+
+    @PostMapping("/save")
+    public String saveMove(@ModelAttribute("move") Move move, RedirectAttributes redirectAttributes) {
+        try {
+            if (move.getId() == null) {
+                // Crear nuevo
+                moveDAO.insertMove(move);
+            } else {
+                // Actualizar existente
+                moveDAO.updateMove(move);
+            }
+        } catch (SQLException e) {
+            // manejo error
+        }
+        return "redirect:/moves";
+    }
+
+    /**
      * Displays all moves.
      */
     @GetMapping

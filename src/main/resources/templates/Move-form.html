@@ -9,7 +9,7 @@
     <div class="container">
         <h1 class="mt-5" th:text="${move.id} == null ? 'Crear Nuevo Movimiento' : 'Editar Movimiento'"></h1>
 
-        <form th:action="@{${move.id} == null ? '/moves/save' : '/moves/update'}"
+        <form th:action="@{${move.id} == null ? '/moves/insert' : '/moves/update'}"
               th:object="${move}" method="post">
 
             <!-- Nombre -->
