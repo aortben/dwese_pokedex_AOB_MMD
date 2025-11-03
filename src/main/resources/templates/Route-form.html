@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head ('Pokemon - Crear/Editar Ruta')"></head>
+<body class="d-flex flex-column h-100">
+
+<header th:replace="fragments/header :: header"></header>
+
+<main class="flex-shrink-0">
+    <div class="container">
+        <h1 class="mt-5" th:text="${route.id} == null ? 'Crear Nueva Ruta' : 'Editar Ruta'"></h1>
+
+        <form th:action="@{${route.id} == null ? '/routes/save' : '/routes/update'}" th:object="${rute}" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre de la Ruta</label>
+                <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Ej: Kanto" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <span th:text="${route.id} == null ? 'Crear' : 'Actualizar'"></span>
+            </button>
+            <a th:href="@{/routes}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</main>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>
