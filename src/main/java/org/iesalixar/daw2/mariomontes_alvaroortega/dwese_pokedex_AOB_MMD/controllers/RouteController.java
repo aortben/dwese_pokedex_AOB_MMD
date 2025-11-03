@@ -35,7 +35,7 @@ public class RouteController {
             logger.error("Error al listar las rutas: {}", e.getMessage());
             model.addAttribute("errorMessage", "Error al listar las rutas.");
         }
-        model.addAttribute("listRoutes", listRoutes);
+        model.addAttribute("routeList", listRoutes);
         return "route";
     }
 

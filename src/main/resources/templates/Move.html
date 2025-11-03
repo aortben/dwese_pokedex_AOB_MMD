@@ -17,14 +17,23 @@
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Categoría</th>
+                <th>Poder</th>
+                <th>Precisión</th>
+                <th>PP</th>
                 <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="move : ${moves}">
+            <tr th:each="move : ${moveList}">
                 <td th:text="${move.id}"></td>
                 <td th:text="${move.name}"></td>
-
+                <td th:text="${move.type}"></td>
+                <td th:text="${move.category}"></td>
+                <td th:text="${move.power}"></td>
+                <td th:text="${move.accuracy}"></td>
+                <td th:text="${move.pp}"></td>
                 <td>
                     <a th:href="@{'/moves/edit?id=' + ${move.id}}" class="btn btn-warning btn-sm">Editar</a>
 
@@ -42,3 +51,4 @@
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>
+

@@ -35,7 +35,7 @@ public class RegionController {
             logger.error("Error al listar las regiones: {}", e.getMessage());
             model.addAttribute("errorMessage", "Error al listar las regiones.");
         }
-        model.addAttribute("listRegions", listRegions);
+        model.addAttribute("regionList", listRegions);
         return "region";
     }
 

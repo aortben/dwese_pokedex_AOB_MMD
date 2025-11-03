@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head :: head ('Pokemon - Regiones')"></head>
+<head th:replace="fragments/head :: head ('Pokémon - Rutas')"></head>
 <body class="d-flex flex-column h-100">
 
 <header th:replace="fragments/header :: header"></header>
 
 <main class="flex-shrink-0">
     <div class="container">
-        <h1 class="mt-5">Rutas de las regiones</h1>
+        <h1 class="mt-5">Rutas</h1>
         <p class="lead">Listado de todas las rutas disponibles en la aplicación.</p>
 
         <a href="/routes/new" class="btn btn-primary mb-3">Nueva Ruta</a>
@@ -17,18 +17,29 @@
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="region : ${regions}">
-                <td th:text="${region.id}"></td>
-                <td th:text="${region.name}"></td>
+            <tr th:each="route : ${routeList}">
+                <td th:text="${route.id}"></td>
+                <td th:text="${route.name}"></td>
+                <td>
+                    <a th:href="@{'/routes/edit'(id=${route.id})}" class="btn btn-sm btn-warning">Editar</a>
+                    <form th:action="@{'/routes/delete'}" method="post" style="display:inline;">
+                        <input type="hidden" name="id" th:value="${route.id}">
+                        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                    </form>
+                </td>
             </tr>
             </tbody>
         </table>
+
+        <div th:if="${errorMessage}" class="alert alert-danger mt-3" th:text="${errorMessage}"></div>
     </div>
 </main>
 
 <footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>
+
