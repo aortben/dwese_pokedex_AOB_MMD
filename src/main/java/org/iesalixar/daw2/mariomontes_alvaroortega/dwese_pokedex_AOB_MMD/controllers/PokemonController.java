@@ -91,12 +91,14 @@ public class PokemonController {
                                 RedirectAttributes redirectAttributes) {
         logger.info("Inserting new pokemon '{}'", pokemon.getName());
         try {
+            // Inserta el Pokémon y obtiene su ID generado
             pokemonDAO.insertPokemon(pokemon);
+            Long newPokemonId = pokemon.getId(); // Asegúrate que insertPokemon() actualice el objeto con el ID generado
 
-            // Añadir movimientos seleccionados
-            if (pokemon.getMoveIds() != null) {
+            // Añadir movimientos seleccionados usando el ID del Pokémon insertado
+            if (pokemon.getMoveIds() != null && newPokemonId != null) {
                 for (Long moveId : pokemon.getMoveIds()) {
-                    pokemonDAO.addMoveToPokemon(pokemon.getId(), moveId);
+                    pokemonDAO.addMoveToPokemon(newPokemonId, moveId);
                 }
             }
 
