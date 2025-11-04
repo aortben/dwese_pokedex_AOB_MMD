@@ -8,34 +8,60 @@
     <h2 class="text-center mb-4 text-danger fw-bold" th:text="${pokemon.id == null} ? 'Nuevo Pokémon' : 'Editar Pokémon'"></h2>
 
     <form th:action="${pokemon.id == null} ? @{/pokemons/insert} : @{/pokemons/update}"
-           th:object="${pokemon}" method="post" class="mx-auto" style="max-width: 500px;">
+          th:object="${pokemon}" method="post" class="mx-auto" style="max-width: 500px;">
 
-    <!-- Campo oculto para enviar el ID si es edición -->
-    <input type="hidden" th:field="*{id}">
+        <!-- Campo oculto para enviar el ID si es edición -->
+        <input type="hidden" th:field="*{id}">
 
-    <div class="mb-3">
-        <label for="name" class="form-label fw-bold">Name</label>
-        <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Nombre del Pokémon" required>
-    </div>
+        <div class="mb-3">
+            <label for="name" class="form-label fw-bold">Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Nombre del Pokémon" required>
+        </div>
 
-    <div class="mb-3">
-        <label for="type" class="form-label fw-bold">Type</label>
-        <input type="text" class="form-control" id="type" th:field="*{type}" placeholder="Tipo" required>
-    </div>
+        <div class="mb-3">
+            <label for="type" class="form-label fw-bold">Type</label>
+            <input type="text" class="form-control" id="type" th:field="*{type}" placeholder="Tipo" required>
+        </div>
 
-    <div class="mb-3">
-        <label for="level" class="form-label fw-bold">Level</label>
-        <input type="number" class="form-control" id="level" th:field="*{level}" min="1" placeholder="Nivel" required>
-    </div>
+        <div class="mb-3">
+            <label for="level" class="form-label fw-bold">Level</label>
+            <input type="number" class="form-control" id="level" th:field="*{level}" min="1" placeholder="Nivel" required>
+        </div>
 
-    <div class="d-flex justify-content-between">
-        <a th:href="@{/pokemons}" class="btn btn-secondary">Cancel</a>
-        <button type="submit" class="btn btn-danger fw-bold">Save</button>
-    </div>
-</form>
+        <!-- NUEVO: Selector de Movimientos -->
+        <div class="mb-3">
+            <label for="moves" class="form-label fw-bold">Movements</label>
+            <select id="moves" th:field="*{moveIds}" class="form-select" multiple>
+                <option th:each="move : ${moves}"
+                        th:value="${move.id}"
+                        th:text="${move.name}"
+                        th:selected="${pokemon.moveIds.contains(move.id)}">
+                </option>
+            </select>
+            <small class="form-text text-muted">Máximo 4 movimientos. Mantén presionada Ctrl/Cmd para seleccionar varios.</small>
+        </div>
 
+        <div class="d-flex justify-content-between">
+            <a th:href="@{/pokemons}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-danger fw-bold">Save</button>
+        </div>
+    </form>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Limitar selección a 4 movimientos -->
+<script>
+    const moveSelect = document.getElementById('moves');
+
+    moveSelect.addEventListener('change', function() {
+        if (this.selectedOptions.length > 4) {
+            alert("Un Pokémon solo puede tener 4 movimientos como máximo.");
+            this.options[this.selectedIndex].selected = false;
+        }
+    });
+</script>
+
 </body>
 </html>
+

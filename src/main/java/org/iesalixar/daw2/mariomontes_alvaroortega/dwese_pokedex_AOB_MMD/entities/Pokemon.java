@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -34,4 +35,31 @@ public class Pokemon {
 
     public List<Route> getRoutes() { return routes; }
     public void setRoutes(List<Route> routes) { this.routes = routes; }
+
+    @ManyToMany
+    @JoinTable(
+            name = "pokemon_moves",
+            joinColumns = @JoinColumn(name = "pokemon_id"),
+            inverseJoinColumns = @JoinColumn(name = "move_id")
+    )
+    private List<Move> moves = new ArrayList<>();
+
+    // Para el formulario (IDs)
+    @Transient
+    private List<Long> moveIds = new ArrayList<>();
+
+    public List<Move> getMoves() { return moves; }
+    public void setMoves(List<Move> moves) { this.moves = moves; }
+
+    public List<Long> getMoveIds() { return moveIds; }
+    public void setMoveIds(List<Long> moveIds) { this.moveIds = moveIds; }
+
+    @Transient
+    public String getMoveNames() {
+        if (moves == null || moves.isEmpty()) return "";
+        return moves.stream()
+                .map(Move::getName)
+                .collect(Collectors.joining(", "));
+    }
+
 }

@@ -63,11 +63,14 @@ public class MoveDAOImpl implements MoveDAO {
      * Delete a move by its ID.
      */
     @Override
-    public void deleteMove(Long id) {
-        logger.info("Deleting move with id: {}", id);
-        String sql = "DELETE FROM move WHERE id = ?";
-        int rowsAffected = jdbcTemplate.update(sql, id);
-        logger.info("Deleted move. Rows affected: {}", rowsAffected);
+    public void deleteMove(Long moveId) {
+        // Eliminar relaciones con Pokémon (opcional si tu DB ya tiene ON DELETE CASCADE)
+        String sql1 = "DELETE FROM pokemon_moves WHERE move_id = ?";
+        jdbcTemplate.update(sql1, moveId);
+
+        // Borrar el movimiento
+        String sql2 = "DELETE FROM move WHERE id = ?";
+        jdbcTemplate.update(sql2, moveId);
     }
 
     /**

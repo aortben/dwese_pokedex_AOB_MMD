@@ -28,10 +28,16 @@ public class PokemonDAOImpl implements PokemonDAO {
 
     @Override
     public List<Pokemon> listAllPokemons() throws SQLException {
-        logger.info("Listing all Pokémon from the database.");
         String sql = "SELECT * FROM pokemon";
         List<Pokemon> pokemons = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Pokemon.class));
-        logger.info("Retrieved {} Pokémon from the database.", pokemons.size());
+
+        // Cargar movimientos para cada Pokémon
+        for (Pokemon p : pokemons) {
+            List<Move> moves = getMovesByPokemonId(p.getId());
+            p.setMoves(moves);
+            p.setMoveIds(moves.stream().map(Move::getId).toList());
+        }
+
         return pokemons;
     }
 
@@ -61,14 +67,16 @@ public class PokemonDAOImpl implements PokemonDAO {
 
     @Override
     public Pokemon getPokemonById(Long id) {
-        logger.info("Fetching Pokémon by ID {}", id);
         String sql = "SELECT * FROM pokemon WHERE id = ?";
         try {
             Pokemon pokemon = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Pokemon.class), id);
-            logger.info("Pokémon retrieved: {} (Type: {}, Level: {})", pokemon.getName(), pokemon.getType(), pokemon.getLevel());
+
+            List<Move> moves = getMovesByPokemonId(id);
+            pokemon.setMoves(moves);
+            pokemon.setMoveIds(moves.stream().map(Move::getId).toList());
+
             return pokemon;
         } catch (Exception e) {
-            logger.warn("No Pokémon found with ID {}", id);
             return null;
         }
     }
@@ -107,6 +115,13 @@ public class PokemonDAOImpl implements PokemonDAO {
         String sql = "DELETE FROM pokemon_moves WHERE pokemon_id = ? AND move_id = ?";
         jdbcTemplate.update(sql, pokemonId, moveId);
     }
+
+    @Override
+    public List<Move> listAllMoves() throws SQLException {
+        String sql = "SELECT * FROM move";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Move.class));
+    }
+
 }
 
 

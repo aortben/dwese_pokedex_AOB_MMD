@@ -18,4 +18,6 @@ public interface PokemonDAO {
     List<Move> getMovesByPokemonId(Long pokemonId) throws SQLException;
     void addMoveToPokemon(Long pokemonId, Long moveId) throws SQLException;
     void removeMoveFromPokemon(Long pokemonId, Long moveId) throws SQLException;
+    List<Move> listAllMoves() throws SQLException;
+
 }

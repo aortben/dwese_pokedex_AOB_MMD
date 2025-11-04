@@ -34,10 +34,11 @@ CREATE TABLE IF NOT EXISTS pokemon_moves (
     pokemon_id INT NOT NULL,
     move_id INT NOT NULL,
     PRIMARY KEY (pokemon_id, move_id),
-    FOREIGN KEY (pokemon_id) REFERENCES pokemon(id),
-    FOREIGN KEY (move_id) REFERENCES move(id)
+    FOREIGN KEY (pokemon_id) REFERENCES pokemon(id) ON DELETE RESTRICT,
+    FOREIGN KEY (move_id) REFERENCES move(id) ON DELETE CASCADE
 );
 
+-- Tabla intermedia entre rutas y pokemons
 CREATE TABLE IF NOT EXISTS route_pokemon (
     route_id INT NOT NULL,
     pokemon_id INT NOT NULL,

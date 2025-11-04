@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="fragments/head :: head('Pokédex - Pokémon')"></head>
+<head th:replace="~{fragments/head :: head('Pokédex - Pokémon')}"></head>
 <body>
-<header th:replace="fragments/header :: header"></header>
+<header th:replace="~{fragments/header :: header}"></header>
 
 <div class="container mt-5 pt-5">
     <h1 class="text-center mb-4 text-danger fw-bold">Pokédex</h1>
@@ -20,6 +20,8 @@
                 <div class="card-body text-center">
                     <p><strong>Type:</strong> <span th:text="${pokemon.type}">Eléctrico</span></p>
                     <p><strong>Level:</strong> <span th:text="${pokemon.level}">25</span></p>
+                    <p><strong>Movements:</strong> <span th:text="${pokemon.moveNames}"></span></p>
+
                 </div>
                 <div class="card-footer d-flex justify-content-around">
                     <a th:href="@{/pokemons/edit(id=${pokemon.id})}" class="btn btn-outline-danger btn-sm">Editar</a>
