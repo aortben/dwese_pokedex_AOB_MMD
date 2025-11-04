@@ -7,7 +7,9 @@ CREATE TABLE IF NOT EXISTS region (
 -- Crear tabla rutas
 CREATE TABLE IF NOT EXISTS route (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
+    name VARCHAR(100) NOT NULL,
+    region_id INT,
+    FOREIGN KEY (region_id) REFERENCES region(id) ON DELETE CASCADE
 );
 
 -- Crear tabla pokemons
@@ -44,7 +46,5 @@ CREATE TABLE IF NOT EXISTS route_pokemon (
     pokemon_id INT NOT NULL,
     PRIMARY KEY (route_id, pokemon_id),
     FOREIGN KEY (route_id) REFERENCES route(id) ON DELETE CASCADE,
-    FOREIGN KEY (pokemon_id) REFERENCES pokemon(id) ON DELETE CASCADE
+    FOREIGN KEY (pokemon_id) REFERENCES pokemon(id) ON DELETE RESTRICT
 );
-
-

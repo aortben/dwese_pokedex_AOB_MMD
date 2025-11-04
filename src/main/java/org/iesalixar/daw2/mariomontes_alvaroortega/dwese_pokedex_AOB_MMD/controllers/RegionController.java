@@ -1,6 +1,7 @@
 package org.iesalixar.daw2.mariomontes_alvaroortega.dwese_pokedex_AOB_MMD.controllers;
 
 import org.iesalixar.daw2.mariomontes_alvaroortega.dwese_pokedex_AOB_MMD.dao.RegionDAO;
+import org.iesalixar.daw2.mariomontes_alvaroortega.dwese_pokedex_AOB_MMD.dao.RouteDAO;
 import org.iesalixar.daw2.mariomontes_alvaroortega.dwese_pokedex_AOB_MMD.entities.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,8 @@ public class RegionController {
 
     @Autowired
     private RegionDAO regionDAO;
+    @Autowired
+    private RouteDAO routeDAO;
 
     @GetMapping
     public String listRegions(Model model) {
@@ -66,17 +69,18 @@ public class RegionController {
     }
 
     @PostMapping("/insert")
-    public String insertRegion(@ModelAttribute("region") Region region, RedirectAttributes redirectAttributes) {
-        logger.info("Insertando nueva región...");
-        try {
-            // Aquí, si existiera el método existsRegionByCode, eliminarlo o ajustarlo
-            // Si no es necesario, simplemente insertamos la región
-            regionDAO.insertRegion(region);
-            logger.info("Región insertada con éxito.");
-        } catch (SQLException e) {
-            logger.error("Error al insertar la región: {}", e.getMessage());
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al insertar la región.");
+    public String insertRegion(@ModelAttribute Region region) throws SQLException {
+
+        regionDAO.insertRegion(region);
+
+        if (region.getNewRoutes() != null) {
+            for (String routeName : region.getNewRoutes()) {
+                if (routeName != null && !routeName.trim().isEmpty()) {
+                    routeDAO.insertRoute(routeName, region.getId());
+                }
+            }
         }
+
         return "redirect:/regions";
     }
 
@@ -85,16 +89,24 @@ public class RegionController {
                                RedirectAttributes redirectAttributes) {
         logger.info("Actualizando región con ID {}", region.getId());
         try {
-            // Ajuste si no existe validación por code
             regionDAO.updateRegion(region);
-            logger.info("Región con ID {} actualizada con éxito.", region.getId());
+            logger.info("Región actualizada con éxito.");
+
+            if (region.getNewRoutes() != null) {
+                for (String routeName : region.getNewRoutes()) {
+                    if (routeName != null && !routeName.trim().isEmpty()) {
+                        routeDAO.insertRoute(routeName, region.getId());
+                    }
+                }
+            }
+
         } catch (SQLException e) {
-            logger.error("Error al actualizar la región con ID {}: {}", region.getId(), e.getMessage());
+            logger.error("Error al actualizar la región: {}", e.getMessage());
             redirectAttributes.addFlashAttribute("errorMessage", "Error al actualizar la región.");
         }
+
         return "redirect:/regions";
     }
-
     @PostMapping("/delete")
     public String deleteRegion(@RequestParam("id") Long id, RedirectAttributes redirectAttributes) {
         logger.info("Eliminando región con ID {}", id);

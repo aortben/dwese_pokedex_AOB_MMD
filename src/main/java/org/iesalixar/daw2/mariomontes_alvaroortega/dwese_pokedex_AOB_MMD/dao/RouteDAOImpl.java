@@ -129,13 +129,15 @@ public class RouteDAOImpl implements RouteDAO {
 
         List<Pokemon> pokemons = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Pokemon.class), id);
         route.setPokemons(pokemons);
-
-        // llenar pokemonsIds para mostrarse seleccionados en el form
         route.setPokemonsIds(pokemons.stream().map(Pokemon::getId).toList());
 
         return route;
     }
 
-
+    @Override
+    public void insertRoute(String name, Long regionId) {
+        String sql = "INSERT INTO route (name, region_id) VALUES (?, ?)";
+        jdbcTemplate.update(sql, name, regionId);
+    }
 
 }

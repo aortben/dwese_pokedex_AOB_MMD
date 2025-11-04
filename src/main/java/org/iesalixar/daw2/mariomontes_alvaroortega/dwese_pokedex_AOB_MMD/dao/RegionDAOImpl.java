@@ -70,12 +70,11 @@ public class RegionDAOImpl implements RegionDAO {
      * @param id ID de la región a eliminar
      */
     @Override
-
     public void deleteRegion(Long id) {
         logger.info("Deleting region with id: {}", id);
-        String sql = "DELETE FROM region WHERE id = ?";
-        int rowsAffected = jdbcTemplate.update(sql, id);
-        logger.info("Deleted region. Rows affected: {}", rowsAffected);
+        String sqlDeleteRegion = "DELETE FROM region WHERE id = ?";
+        int regionDeleted = jdbcTemplate.update(sqlDeleteRegion, id);
+        logger.info("Deleted region. Rows affected: {}", regionDeleted);
     }
 
     /**

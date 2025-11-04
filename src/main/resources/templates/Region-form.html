@@ -9,17 +9,41 @@
     <div class="container">
         <h1 class="mt-5" th:text="${region.id} == null ? 'Crear Nueva Región' : 'Editar Región'"></h1>
 
-        <form th:action="@{${region.id} == null ? '/regions/insert' : '/regions/update'}" th:object="${region}" method="post">
+        <form th:action="@{${region.id} == null ? '/regions/insert' : '/regions/update'}"
+              th:object="${region}" method="post">
+
             <div class="mb-3">
-                <label for="name" class="form-label">Nombre de la Región</label>
-                <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Ej: Kanto" required>
+                <label class="form-label">Nombre de la Región</label>
+                <input type="text" th:field="*{name}" class="form-control" placeholder="Ej: Kanto" required>
             </div>
 
+            <!-- Rutas -->
+            <div id="routes-container" class="mb-3">
+                <label class="form-label">Rutas de la Región</label>
+
+                <div th:each="route, iter : ${region.newRoutes}">
+                    <input type="text" th:field="*{newRoutes[__${iter.index}__]}" class="form-control mb-2" placeholder="Ej: Ruta 1">
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-warning" onclick="addRouteField()">+ Añadir Ruta</button>
             <button type="submit" class="btn btn-primary">
                 <span th:text="${region.id} == null ? 'Crear' : 'Actualizar'"></span>
             </button>
             <a th:href="@{/regions}" class="btn btn-secondary">Cancelar</a>
         </form>
+
+        <script>
+            function addRouteField() {
+                const container = document.getElementById("routes-container");
+                const input = document.createElement("input");
+                input.type = "text";
+                input.name = "newRoutes";
+                input.placeholder = "Ej: Ruta 2";
+                input.classList.add("form-control","mb-2");
+                container.appendChild(input);
+            }
+        </script>
     </div>
 </main>
 

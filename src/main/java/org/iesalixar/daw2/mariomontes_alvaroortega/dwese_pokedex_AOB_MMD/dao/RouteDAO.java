@@ -15,4 +15,7 @@ public interface RouteDAO {
     Route getRouteById(Long id) throws SQLException;
 
     public Route getRouteWithPokemons(Long id) throws SQLException;
+
+    void insertRoute(String name, Long regionId);
+
 }
