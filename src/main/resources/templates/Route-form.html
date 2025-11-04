@@ -21,8 +21,8 @@
             </div>
             <div class="mb-3">
                 <label for="pokemons" class="form-label">Pokémon en esta ruta</label>
-                <select id="pokemons" th:field="*{pokemons}" class="form-control" multiple>
-                    <option th:each="pokemon : ${allPokemons}"
+                <select id="pokemons" th:field="*{pokemonsIds}" class="form-control" multiple>
+                <option th:each="pokemon : ${allPokemons}"
                             th:value="${pokemon.id}"
                             th:text="${pokemon.name}"
                             th:selected="${route.pokemons.contains(pokemon)}">

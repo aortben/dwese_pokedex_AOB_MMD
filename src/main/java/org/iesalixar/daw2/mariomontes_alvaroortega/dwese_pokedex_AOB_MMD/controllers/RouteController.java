@@ -76,30 +76,38 @@ public class RouteController {
 
     // Insertar nueva ruta
     @PostMapping("/insert")
-    public String insertRoute(@ModelAttribute("route") Route route, RedirectAttributes redirectAttributes) {
-        logger.info("Insertando nueva ruta...");
-        try {
-            routeDAO.insertRoute(route);
-            logger.info("Ruta insertada con éxito.");
-        } catch (SQLException e) {
-            logger.error("Error al insertar la ruta: {}", e.getMessage());
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al insertar la ruta.");
+    public String insertRoute(@ModelAttribute Route route, RedirectAttributes flash) {
+
+        List<Pokemon> pokemons = new ArrayList<>();
+        if (route.getPokemonsIds() != null) {
+            for (Long id : route.getPokemonsIds()) {
+                Pokemon p = pokemonDAO.getPokemonById(id);
+                if (p != null) pokemons.add(p);
+            }
         }
+        route.setPokemons(pokemons);
+        routeDAO.insertRoute(route);
+
+        flash.addFlashAttribute("success", "Ruta creada correctamente.");
         return "redirect:/routes";
     }
 
     // Actualizar ruta existente
     @PostMapping("/update")
-    public String updateRoute(@ModelAttribute("route") Route route,
-                              RedirectAttributes redirectAttributes) {
-        logger.info("Actualizando ruta con ID {}", route.getId());
-        try {
-            routeDAO.updateRoute(route);
-            logger.info("Ruta con ID {} actualizada con éxito.", route.getId());
-        } catch (SQLException e) {
-            logger.error("Error al actualizar la ruta con ID {}: {}", route.getId(), e.getMessage());
-            redirectAttributes.addFlashAttribute("errorMessage", "Error al actualizar la ruta.");
+    public String updateRoute(@ModelAttribute Route route, RedirectAttributes flash) {
+
+        List<Pokemon> pokemons = new ArrayList<>();
+        if (route.getPokemonsIds() != null) {
+            for (Long id : route.getPokemonsIds()) {
+                Pokemon p = pokemonDAO.getPokemonById(id);
+                if (p != null) pokemons.add(p);
+            }
         }
+        route.setPokemons(pokemons);
+
+        routeDAO.updateRoute(route);
+
+        flash.addFlashAttribute("success", "Ruta actualizada correctamente.");
         return "redirect:/routes";
     }
 

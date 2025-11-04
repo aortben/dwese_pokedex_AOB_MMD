@@ -38,4 +38,15 @@ public class Route {
 
     public List<Pokemon> getPokemons() { return pokemons; }
     public void setPokemons(List<Pokemon> pokemons) { this.pokemons = pokemons; }
+
+    private List<Long> pokemonsIds = new ArrayList<>();
+
+    public List<Long> getPokemonsIds() {
+        return pokemonsIds;
+    }
+
+    public void setPokemonsIds(List<Long> pokemonsIds) {
+        this.pokemonsIds = pokemonsIds;
+    }
+
 }

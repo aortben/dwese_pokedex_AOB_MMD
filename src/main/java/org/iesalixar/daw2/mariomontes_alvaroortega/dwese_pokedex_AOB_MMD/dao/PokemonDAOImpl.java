@@ -60,7 +60,7 @@ public class PokemonDAOImpl implements PokemonDAO {
     }
 
     @Override
-    public Pokemon getPokemonById(Long id) throws SQLException {
+    public Pokemon getPokemonById(Long id) {
         logger.info("Fetching Pokémon by ID {}", id);
         String sql = "SELECT * FROM pokemon WHERE id = ?";
         try {

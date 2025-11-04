@@ -6,9 +6,9 @@ import java.util.List;
 public interface RouteDAO {
     List<Route> listAllRoutes() throws SQLException;
 
-    void insertRoute(Route route) throws SQLException;
+    void insertRoute(Route route);
 
-    void updateRoute(Route route) throws SQLException;
+    void updateRoute(Route route);
 
     void deleteRoute(Long id) throws SQLException;
 

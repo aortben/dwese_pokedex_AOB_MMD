@@ -1,5 +1,6 @@
 package org.iesalixar.daw2.mariomontes_alvaroortega.dwese_pokedex_AOB_MMD.dao;
 
+import org.iesalixar.daw2.mariomontes_alvaroortega.dwese_pokedex_AOB_MMD.entities.Pokemon;
 import org.iesalixar.daw2.mariomontes_alvaroortega.dwese_pokedex_AOB_MMD.entities.Route;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -45,12 +46,13 @@ public class RouteDAOImpl implements RouteDAO {
      */
     @Override
     public void insertRoute(Route route) {
-        logger.info("Inserting route with name: {}",
-                route.getName());
         String sql = "INSERT INTO route (name) VALUES (?)";
-        int rowsAffected = jdbcTemplate.update(sql,
-                route.getName());
-        logger.info("Inserted route. Rows affected: {}", rowsAffected);
+        jdbcTemplate.update(sql, route.getName());
+
+        Long routeId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
+        route.setId(routeId);
+
+        insertRoutePokemons(route);
     }
 
     /**
@@ -59,11 +61,14 @@ public class RouteDAOImpl implements RouteDAO {
      */
     @Override
     public void updateRoute(Route route) {
-        logger.info("Updating region with id: {}", route.getId());
         String sql = "UPDATE route SET name = ? WHERE id = ?";
-        int rowsAffected = jdbcTemplate.update(sql,
-                route.getName(), route.getId());
-        logger.info("Updated region. Rows affected: {}", rowsAffected);
+        jdbcTemplate.update(sql, route.getName(), route.getId());
+
+        // borrar relaciones anteriores
+        jdbcTemplate.update("DELETE FROM route_pokemon WHERE route_id = ?", route.getId());
+
+        // insertar las nuevas
+        insertRoutePokemons(route);
     }
 
     /**
@@ -100,12 +105,37 @@ public class RouteDAOImpl implements RouteDAO {
         }
     }
 
-    public Route getRouteWithPokemons(Long id) throws SQLException {
-        Route route = getRouteById(id); // tu método actual
-        if(route != null) {
-            route.getPokemons().size(); // fuerza carga de Pokémon si es lazy
+    private void insertRoutePokemons(Route route) {
+        if (route.getPokemons() == null) return;
+
+        for (Pokemon p : route.getPokemons()) {
+            jdbcTemplate.update(
+                    "INSERT INTO route_pokemon (route_id, pokemon_id) VALUES (?, ?)",
+                    route.getId(), p.getId()
+            );
         }
+    }
+
+    public Route getRouteWithPokemons(Long id) {
+        Route route = getRouteById(id);
+        if (route == null) return null;
+
+        String sql = """
+        SELECT p.id, p.name
+        FROM pokemon p
+        JOIN route_pokemon rp ON p.id = rp.pokemon_id
+        WHERE rp.route_id = ?
+    """;
+
+        List<Pokemon> pokemons = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Pokemon.class), id);
+        route.setPokemons(pokemons);
+
+        // llenar pokemonsIds para mostrarse seleccionados en el form
+        route.setPokemonsIds(pokemons.stream().map(Pokemon::getId).toList());
+
         return route;
     }
+
+
 
 }

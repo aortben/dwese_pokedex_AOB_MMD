@@ -55,18 +55,13 @@ public class PokemonController {
     @GetMapping("/edit")
     public String showEditForm(@RequestParam("id") Long id, Model model) {
         logger.info("Showing edit form for pokemon ID {}", id);
-        try {
-            Pokemon pokemon = pokemonDAO.getPokemonById(id);
-            if (pokemon == null) {
-                logger.warn("Pokemon with ID {} not found.", id);
-                model.addAttribute("errorMessage", "Pokemon not found.");
-                return "redirect:/pokemons";
-            }
-            model.addAttribute("pokemon", pokemon);
-        } catch (SQLException e) {
-            logger.error("Error fetching pokemon with ID {}: {}", id, e.getMessage());
-            model.addAttribute("errorMessage", "Error fetching pokemon.");
+        Pokemon pokemon = pokemonDAO.getPokemonById(id);
+        if (pokemon == null) {
+            logger.warn("Pokemon with ID {} not found.", id);
+            model.addAttribute("errorMessage", "Pokemon not found.");
+            return "redirect:/pokemons";
         }
+        model.addAttribute("pokemon", pokemon);
         return "pokemon-form";
     }
 

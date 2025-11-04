@@ -12,7 +12,7 @@ public interface PokemonDAO {
     void insertPokemon(Pokemon pokemon) throws SQLException;
     void updatePokemon(Pokemon pokemon) throws SQLException;
     void deletePokemon(Long id) throws SQLException;
-    Pokemon getPokemonById(Long id) throws SQLException;
+    Pokemon getPokemonById(Long id);
 
     //Moves management
     List<Move> getMovesByPokemonId(Long pokemonId) throws SQLException;
