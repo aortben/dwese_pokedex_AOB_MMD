@@ -31,7 +31,6 @@ public class PokemonDAOImpl implements PokemonDAO {
         String sql = "SELECT * FROM pokemon";
         List<Pokemon> pokemons = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Pokemon.class));
 
-        // Cargar movimientos para cada Pokémon
         for (Pokemon p : pokemons) {
             List<Move> moves = getMovesByPokemonId(p.getId());
             p.setMoves(moves);

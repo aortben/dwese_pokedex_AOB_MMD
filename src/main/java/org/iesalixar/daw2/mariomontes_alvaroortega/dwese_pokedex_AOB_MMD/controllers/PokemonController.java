@@ -28,25 +28,47 @@ public class PokemonController {
      * Displays all pokemon with their moves.
      */
     @GetMapping
-    public String listPokemons(Model model) {
-        logger.info("Requesting the list of all pokemon...");
-        try {
-            List<Pokemon> pokemonList = pokemonDAO.listAllPokemons();
+    public String listPokemons(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "6") int size,
+            Model model) {
 
-            // Cargar movimientos de cada Pokémon
-            for (Pokemon p : pokemonList) {
+        logger.info("Requesting pokemon page {} with size {}", page, size);
+
+        try {
+            List<Pokemon> allPokemons = pokemonDAO.listAllPokemons();
+
+            int totalPokemons = allPokemons.size();
+            int totalPages = (int) Math.ceil((double) totalPokemons / size);
+
+            if (page < 1) page = 1;
+            if (page > totalPages) page = totalPages;
+
+            int fromIndex = (page - 1) * size;
+            int toIndex = Math.min(fromIndex + size, totalPokemons);
+
+            List<Pokemon> pagePokemons = allPokemons.subList(fromIndex, toIndex);
+
+            // Cargar movimientos solo de los Pokémon visibles
+            for (Pokemon p : pagePokemons) {
                 List<Move> moves = pokemonDAO.getMovesByPokemonId(p.getId());
                 p.setMoves(moves);
                 p.setMoveIds(moves.stream().map(Move::getId).toList());
             }
 
-            model.addAttribute("pokemonList", pokemonList);
-            logger.info("{} pokemon loaded successfully.", pokemonList.size());
+            model.addAttribute("pokemonList", pagePokemons);
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", totalPages);
+            model.addAttribute("size", size);
+
+            logger.info("Loaded {} pokemons for page {}/{}", pagePokemons.size(), page, totalPages);
+
         } catch (SQLException e) {
             logger.error("Error listing pokemon: {}", e.getMessage());
             model.addAttribute("errorMessage", "Error listing pokemon.");
         }
-        return "pokemon"; // Corresponds to pokemon.html
+
+        return "pokemon";
     }
 
     @GetMapping("/new")
